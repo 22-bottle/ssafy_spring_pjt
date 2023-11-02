@@ -7,10 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/include/head.jsp" %>
+	<%@ include file="../include/head.jsp" %>
 </head>
 <body>
-	<%@ include file="/include/nav.jsp" %>
+	<%@ include file="../include/nav.jsp" %>
 
 	<div class="d-flex mt-5"></div>
 	

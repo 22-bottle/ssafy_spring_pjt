@@ -12,10 +12,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/include/head.jsp" %>
+	<%@ include file="../include/head.jsp" %>
 </head>
 <body>
-	<%@ include file="/include/nav.jsp" %>
+	<%@ include file="../include/nav.jsp" %>
 	<div class="d-flex mt-5"></div>
 	
 	<div class="min-vh-100">
@@ -180,7 +180,7 @@
     </div>
     
     <!-- Include Footer -->
-	<jsp:include page="/include/footer.jsp"></jsp:include>
+	<jsp:include page="../include/footer.jsp"></jsp:include>
 	
     <!-- 로그인==글작성자 일 때 동작 -->
     <c:if test="${userInfo.userId eq article.userId}">

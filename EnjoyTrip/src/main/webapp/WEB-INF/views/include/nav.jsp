@@ -23,23 +23,23 @@
 			<div class="justify-content-start">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="${root }/index.jsp">홈</a>
+					<a class="nav-link" href="${root}/main/index">홈</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="${root }/trip?action=trip">지역별여행지</a>
+					<a class="nav-link" href="${root}/trip?action=trip">지역별여행지</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="${root }/board?action=list">여행후기</a>
+					<a class="nav-link" href="${root}/board/list">여행후기</a>
 				</li>
 			</ul>
 			</div>
 			
 			<!-- 로고 -->
 			<div id="navb-logo" class="justify-content-center">
-				<a class="navbar-brand " href="${root }/index.jsp">
+				<a class="navbar-brand " href="${root}/main/index">
 			        <img
 			          src="${root}/img/logo.png"
-			          href="${root}/index"
+			          href="${root}/main/index"
 			          style="width: 100px"
 			          alt="logo image"
 			        />
@@ -55,10 +55,10 @@
 					<c:when test="${empty userInfo }">
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link" href="${root }/user/login.jsp">로그인</a>
+								<a class="nav-link" href="${root}/main/login">로그인</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="${root }/user/join.jsp">회원가입</a>
+								<a class="nav-link" href="${root}/main/join">회원가입</a>
 							</li>
 						</ul>
 					</c:when>
@@ -67,10 +67,10 @@
 					<c:otherwise>
 						<ul class="navbar-nav">
 							<li class="nav-item">
-								<a class="nav-link" href="${root }/user/mypage.jsp">${userInfo.userId }님 반가워요!</a>
+								<a class="nav-link" href="${root}/main/mypage">${userInfo.userId }님 반가워요!</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="${root }/user?action=logout">로그아웃</a>
+								<a class="nav-link" href="${root}/user?action=logout">로그아웃</a>
 							</li>
 						</ul>
 					</c:otherwise>

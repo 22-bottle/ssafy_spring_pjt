@@ -8,10 +8,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/include/head.jsp" %>
+	<%@ include file="../include/head.jsp" %>
 </head>
 <body>
-	<%@ include file="/include/nav.jsp" %>
+	<%@ include file="../include/nav.jsp" %>
 	
 	<div class="d-flex mt-5"></div>
 	
@@ -118,7 +118,7 @@
     <!-- Include Footer -->
 	<div
 		style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: #f0f0f0; text-align: center;">
-		<jsp:include page="/include/footer.jsp"></jsp:include>
+		<jsp:include page="../include/footer.jsp"></jsp:include>
 	</div>
     
     <script>

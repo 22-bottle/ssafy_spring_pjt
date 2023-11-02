@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/include/head.jsp"%>
+<%@ include file="../include/head.jsp"%>
 </head>
 <body>
-	<%@ include file="/include/nav.jsp"%>
+	<%@ include file="../include/nav.jsp"%>
 
-	<%@ include file="/include/confirm.jsp"%>
+	<%@ include file="../include/confirm.jsp"%>
 
 	<div class="d-flex mt-5"></div>
 
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 
-	<%@ include file="/include/footer.jsp"%>
+	<%@ include file="../include/footer.jsp"%>
 
 	<script>
 		document.querySelector("#btn-register").addEventListener(
