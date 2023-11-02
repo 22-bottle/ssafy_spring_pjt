@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.ssafy.spring.board.model.mapper.BoardMapper">
+
+    <!-- 글 작성 -->
+    <insert id="writeArticle" parameterType="edu.ssafy.spring.board.dto.BoardDto">
+        INSERT INTO board (user_id, subject, content)
+        VALUES (#{userId}, #{subject}, #{content})
+    </insert>
+
+    <!-- 글 목록 -->
+    <select id="listArticle" parameterType="map" resultType="edu.ssafy.spring.board.dto.BoardDto">
+        SELECT article_no, user_id, subject, content, hit, comment_cnt, register_time
+        FROM board
+        <where>
+            <if test="key != null and word != null">
+                <choose>
+                    <when test="key == 'subject'">
+                        subject LIKE CONCAT('%', #{word}, '%')
+                    </when>
+                    <otherwise>
+                        ${key} = #{word}
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+        ORDER BY article_no DESC
+        LIMIT #{start}, #{listsize}
+    </select>
+
+    <!-- 글 개수 -->
+    <select id="getTotalArticleCount" parameterType="map" resultType="int">
+        SELECT COUNT(article_no)
+        FROM board
+        <where>
+            <if test="key != null and word != null">
+                <choose>
+                    <when test="key == 'subject'">
+                        subject LIKE CONCAT('%', #{word}, '%')
+                    </when>
+                    <otherwise>
+                        ${key} = #{word}
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+    <!-- 글 상세 -->
+    <select id="getArticle" parameterType="int" resultType="edu.ssafy.spring.board.dto.BoardDto">
+        SELECT article_no, user_id, subject, content, hit, register_time
+        FROM board
+        WHERE article_no = #{articleNo}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateHit" parameterType="int">
+        UPDATE board
+        SET hit = hit + 1
+        WHERE article_no = #{articleNo}
+    </update>
+
+    <!-- 글 수정 -->
+    <update id="modifyArticle" parameterType="edu.ssafy.spring.board.dto.BoardDto">
+        UPDATE board
+        SET subject = #{subject}, content = #{content}
+        WHERE article_no = #{articleNo}
+    </update>
+
+    <!-- 글 삭제 -->
+    <delete id="deleteArticle" parameterType="int">
+        DELETE FROM board
+        WHERE article_no = #{articleNo}
+    </delete>
+
+    <!-- 댓글 수 증가 -->
+    <update id="updateCommentCnt" parameterType="edu.ssafy.spring.comment.dto.CommentDto">
+        UPDATE board
+        SET comment_cnt = comment_cnt + 1
+        WHERE article_no = #{articleNo}
+    </update>
+
+    <!-- 댓글 수 감소 -->
+    <update id="deleteCommentCnt" parameterType="int">
+        UPDATE board
+        SET comment_cnt = comment_cnt - 1
+        WHERE article_no = #{articleNo}
+    </update>
+
+</mapper>
