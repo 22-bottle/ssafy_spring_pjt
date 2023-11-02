@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="root" value="${pageContext.request.contextPath }"></c:set>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <head>
 	<style>
@@ -38,8 +38,8 @@
 			<div id="navb-logo" class="justify-content-center">
 				<a class="navbar-brand " href="${root }/index.jsp">
 			        <img
-			          src="${root }/assets/img/logo.png"
-			          href="${root }/index.jsp"
+			          src="${root}/img/logo.png"
+			          href="${root}/index"
 			          style="width: 100px"
 			          alt="logo image"
 			        />

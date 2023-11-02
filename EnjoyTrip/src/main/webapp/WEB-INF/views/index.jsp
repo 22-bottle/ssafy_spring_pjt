@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <he	ad>
-  	<%@ include file="/include/head.jsp" %>
+  	<%@ include file="./include/head.jsp" %>
   </head>
 
   <body>
     <!--상단 header start-->
-    <%@ include file="/include/nav.jsp" %>
+    <%@ include file="./include/nav.jsp" %>
     <!--상단 header end-->
 
     <!--중앙 content start-->
@@ -32,7 +32,7 @@
               <p>📍대전 유성구 도룡동</p>
             </div>
             <img
-              src="./assets/img/main-1.jpg"
+              src="${root}/img/main-1.jpg"
               width="640"
               height="480"
               style="object-fit: cover; object-position: center"
@@ -46,7 +46,7 @@
               <p>📍대전 서구 둔산대로 169</p>
             </div>
             <img
-              src="./assets/img/main-2.jpg"
+              src="${root}/img/main-2.jpg"
               width="640"
               height="480"
               style="object-fit: cover; object-position: 80% 20%"
@@ -60,7 +60,7 @@
               <p>대전에서 추억을 남겨보세요</p>
             </div>
             <img
-              src="./assets/img/main-3.jpg"
+              src="${root}/img/main-3.jpg"
               width="640"
               height="480"
               style="object-fit: cover; object-position: 40% 60%"
@@ -94,7 +94,7 @@
     <div class="container">
       <div class="row card-group m-5">
         <div class="card">
-          <img src="./assets/img/card-1.jpg" class="card-img-top" alt="대전0시축제" />
+          <img src="${root}/img/card-1.jpg" class="card-img-top" alt="대전0시축제" />
           <div class="card-body">
             <h5 class="card-title">대전0시축제 "내가 찍은 여름"</h5>
             <p class="card-text">
@@ -111,7 +111,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="./assets/img/card-2.png" class="card-img-top" alt="충청권 스탬프 투어" />
+          <img src="${root}/img/card-2.png" class="card-img-top" alt="충청권 스탬프 투어" />
           <div class="card-body">
             <h5 class="card-title">충청권 스탬프 투어</h5>
             <p class="card-text">
@@ -127,7 +127,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="./assets/img/card-3.png" class="card-img-top" alt="2023 누들대전 페스티벌" />
+          <img src="${root}/img/card-3.png" class="card-img-top" alt="2023 누들대전 페스티벌" />
           <div class="card-body">
             <h5 class="card-title">2023 누들대전 페스티벌</h5>
             <p class="card-text">
@@ -153,7 +153,7 @@
     <!-- Include Footer -->
 	<div
 		style="left: 0; bottom: 0; width: 100%; background-color: #f0f0f0; text-align: center;">
-		<jsp:include page="/include/footer.jsp"></jsp:include>
+		<jsp:include page="./include/footer.jsp"></jsp:include>
 	</div>
     <!--하단 footer end-->
 

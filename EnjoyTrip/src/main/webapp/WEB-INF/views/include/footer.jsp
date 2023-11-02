@@ -12,7 +12,7 @@
 <body>
 	<div class="navbar navbar-expand-sm bg-light mt-auto">
 		<div class="container">
-	        EnjoyTrip_5조_이혜진_정준수
+	        EnjoyTrip_13조_이희병_정준수
 	        <ul class="navbar-nav ms-auto" >
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">회사소개</a>
