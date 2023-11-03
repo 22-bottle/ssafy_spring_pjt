@@ -5,32 +5,38 @@
 
 <mapper
 	namespace="edu.ssafy.spring.comment.model.mapper.CommentMapper">
+	
+	<resultMap type="edu.ssafy.spring.comment.dto.CommentDto" id="commentDto">
+	    <result column="article_no" property="articleNo"/>
+	    <result column="comment_content" property="commentContent"/>
+	    <result column="comment_no" property="commentNo"/>
+	    <result column="register_time" property="registerTime"/>
+	    <result column="user_id" property="userId"/>
+	</resultMap>
 
 	<!-- addComment -->
-	<insert id="addComment"
-		parameterType="edu.ssafy.spring.comment.dto.CommentDto">
+	<insert id="addComment" parameterType="edu.ssafy.spring.comment.dto.CommentDto">
 		INSERT INTO comment (article_no, user_id, comment_content)
-		VALUES (#{article_no}, #{user_id}, #{comment_content})
+		VALUES (#{articleNo}, #{userId}, #{commentContent})
 	</insert>
 
 	<!-- listComment -->
-	<select id="listComment" parameterType="int"
-		resultType="edu.ssafy.spring.comment.dto.CommentDto">
+	<select id="listComment" parameterType="int" resultMap="commentDto">
 		SELECT comment_no, article_no, user_id, comment_content, register_time
 		FROM comment
-		WHERE article_no = #{article_no}
+		WHERE article_no = #{articleNo}
 	</select>
 
 	<!-- deleteComment -->
 	<delete id="deleteComment" parameterType="int">
 		DELETE FROM comment
-		WHERE comment_no = #{comment_no}
+		WHERE comment_no = #{commentNo}
 	</delete>
 
 	<!-- deleteComments -->
 	<delete id="deleteComments" parameterType="int">
 		DELETE FROM comment
-		WHERE article_no = #{article_no}
+		WHERE article_no = #{articleNo}
 	</delete>
 	
 </mapper>

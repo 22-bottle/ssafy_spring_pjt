@@ -137,10 +137,10 @@ public class BoardController {
 		if (userDto.getUserId() != null) {
 			try {
 				boardService.modifyArticle(boardDto);
-				redirectAttributes.addAttribute("pgno", map.get("pgno"));
+				redirectAttributes.addAttribute("pgno", 1);
 				redirectAttributes.addAttribute("key", map.get("key"));
 				redirectAttributes.addAttribute("word", map.get("word"));
-				return "redirect:/article/list";
+				return "redirect:/board/list";
 			} catch (Exception e) {
 				e.printStackTrace();
 				redirectAttributes.addAttribute("msg", "글수정 중 문제가 발생했어요!😥");
@@ -158,10 +158,10 @@ public class BoardController {
 		if (userDto != null) {
 			try {
 				boardService.deleteArticle(articleNo);
-				redirectAttributes.addAttribute("pgno", map.get("pgno"));
+				redirectAttributes.addAttribute("pgno", 1);
 				redirectAttributes.addAttribute("key", map.get("key"));
 				redirectAttributes.addAttribute("word", map.get("word"));
-				return "redirect:/article/list";
+				return "redirect:/board/list";
 			} catch (Exception e) {
 				e.printStackTrace();
 				redirectAttributes.addAttribute("msg", "글삭제 중 문제가 발생했어요!😥");
@@ -181,11 +181,10 @@ public class BoardController {
 			commentDto.setArticleNo(articleNo);
 			commentDto.setUserId(userDto.getUserId());
 			commentDto.setCommentContent(commentContent);
-
 			try {
 				commentService.addComment(commentDto);
 				boardService.updateCommentCnt(commentDto);
-				return "redirect:/view?articleno=" + articleNo;
+				return "redirect:/board/view?articleno=" + articleNo;
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "댓글 작성 중 문제가 발생했어요!😥");
@@ -196,7 +195,7 @@ public class BoardController {
 		}
 	}
 
-	@PostMapping("/commenDelete")
+	@GetMapping("/commentDelete")
 	public String commentDelete(@RequestParam("articleno") int articleNo, @RequestParam("commentno") int commentNo,
 			Model model, HttpSession session) {
 		UserDto userDto = (UserDto) session.getAttribute("userInfo");
@@ -204,7 +203,7 @@ public class BoardController {
 			try {
 				commentService.deleteComment(commentNo);
 				boardService.deleteCommentCnt(articleNo);
-				return "redirect:/board?action=view&articleno=" + articleNo;
+				return "redirect:/board/view?articleno=" + articleNo;
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "댓글 삭제 중 문제가 발생했어요!😥");

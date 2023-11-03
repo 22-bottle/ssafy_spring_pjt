@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="root" value="${pageContext.request.contextPath }"></c:set>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +20,6 @@
 		location.href = "${root}/article?action=list";
 		</script>
 	</c:if>
-      <%@ include file="/include/confirm.jsp" %>
-      
       <div class="d-flex mt-5"></div>
       
       <div class="min-vh-100">
@@ -38,8 +34,7 @@
         <!-- 글수정 내용 -->
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-modify" method="POST" action="">
-          	<input type="hidden" name="action" value="modify">
-          	<input type="hidden" name="articleno" value="${article.getArticleNo()}">
+          	<input type="hidden" name="article_no" value="${article.article_no}">
             <div class="mb-3">
               <label for="subject" class="form-label">제목 : </label>
               <input type="text" class="form-control" id="subject" name="subject" value="${article.subject}" />
@@ -72,7 +67,7 @@
       	  // origin
           //form.setAttribute("action", "${root}/board");
           // 추가
-          form.setAttribute("action", "${root}/board?action=list&pgno=${pgno}&key=&word=#");
+          form.setAttribute("action", "/board/modify");
           form.submit();
         }
       });
@@ -80,7 +75,7 @@
     	// origin
         //location.href = "${root}/board?action=list";
         // 추가
-        location.href = "${root}/board?action=list&pgno=${pgno}&key=&word=#";
+        location.href = "${root}/board/list?pgno=1&key=&word=#";
       });
     </script>
 </body>

@@ -5,6 +5,14 @@
 
 <mapper namespace="edu.ssafy.spring.board.model.mapper.BoardMapper">
 
+	<resultMap type="edu.ssafy.spring.comment.dto.CommentDto" id="commentDto">
+	    <result column="article_no" property="articleNo"/>
+	    <result column="comment_content" property="commentContent"/>
+	    <result column="comment_no" property="commentNo"/>
+	    <result column="register_time" property="registerTime"/>
+	    <result column="user_id" property="userId"/>
+	</resultMap>
+
     <!-- 글 작성 -->
     <insert id="writeArticle" parameterType="boardDto">
         INSERT INTO board (user_id, subject, content)
@@ -80,14 +88,14 @@
     <update id="updateCommentCnt" parameterType="edu.ssafy.spring.comment.dto.CommentDto">
         UPDATE board
         SET comment_cnt = comment_cnt + 1
-        WHERE article_no = #{article_no}
+        WHERE article_no = #{articleNo}
     </update>
 
     <!-- 댓글 수 감소 -->
     <update id="deleteCommentCnt" parameterType="int">
         UPDATE board
         SET comment_cnt = comment_cnt - 1
-        WHERE article_no = #{article_no}
+        WHERE article_no = #{articleNo}
     </update>
 
 </mapper>

@@ -21,7 +21,6 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void addComment(CommentDto commentDto) throws Exception {
 		commentMapper.addComment(commentDto);
-
 	}
 
 	@Override
@@ -31,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public void deleteComment(int commentNo) throws Exception {
-		commentMapper.deleteComment(commentNo);		
+		commentMapper.deleteComment(commentNo);
 	}
 
 	@Override

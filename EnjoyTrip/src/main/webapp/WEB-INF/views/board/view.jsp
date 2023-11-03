@@ -135,7 +135,7 @@
 	              <div class="clearfix align-content-center">
               		<img class="avatar me-2 float-md-start bg-light p-2"
                      src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
-              		<span class="fw-bold">${comment.userId}</span> <br />
+              		<span class="fw-bold">${comment.userId}</span><br />
                   	<span class="text-secondary fw-light"> ${comment.registerTime}</span>
 	                </p>
 	              </div>
@@ -155,7 +155,7 @@
 						    <script>
 						      document.querySelector("#comment-delete-${comment.commentNo}").addEventListener("click", function () {
 						        if (confirm("정말로 삭제하시겠어요?😥")) {
-						          location.href = "${root}/board?action=commentDelete&articleno=${article.getArticleNo()}&commentno=" + this.getAttribute("comment-no");
+						          location.href = "${root}/board/commentDelete?articleno=${article.article_no}&commentno=" + this.getAttribute("comment-no");
 						        }
 						      });
 						    </script>
@@ -185,29 +185,28 @@
     <c:if test="${userInfo.userId eq article.user_id}">
     	<script>
     		document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-            	location.href = "/board/modify&articleno=${article.getArticle_no()}";
+            	location.href = "/board/modify?articleno=${article.article_no}";
           	});
     		
           	document.querySelector("#btn-delete").addEventListener("click", function () {
-          		if(confirm("정말로 삭제하시겠어요?😥")){
-	            	location.href = "${root}/board?action=delete&articleno=${article.getArticleNo()}";
+          		if(confirm("정말로 삭제하시겠어요?😥")) {
+	            	location.href = "/board/delete?articleno=${article.article_no}";
           		}
        		});
     	</script>
     </c:if>
     
     <!-- 로그인==댓글작성자 일 때 동작 -->
-    <c:if test="${userInfo.userId eq comment.user_id}">
+    <c:if test="${userInfo.userId eq comment.userId}">
     	
     </c:if>
     
     <!-- 로그인과 상관 없이 동작 -->
     <script>
       document.querySelector("#btn-list").addEventListener("click", function () {
-        //location.href = "${root}/board?action=list"; // origin
         // 추가
-        location.href = "${root}/board?action=list&pgno=${pgno}&key=&word=#";
-        console.log(location.href);
+        location.href = "/board/list?pgno=1&key=&word=";
+        console.log(pgno);
       });
       
       document.querySelector("#comment-register").addEventListener("click", function () {
@@ -216,7 +215,7 @@
           return;
         } else {
           let form = document.querySelector("#comment-regist");
-          form.setAttribute("action", "${root}/board?action=commentAdd");
+          form.setAttribute("action", "/board/commentAdd");
           form.submit();
         }
       });
