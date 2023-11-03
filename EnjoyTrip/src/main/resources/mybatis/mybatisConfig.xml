@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!-- 	<typeAliases>
-	
-	</typeAliases> -->
+	<typeAliases>
+		<typeAlias type="edu.ssafy.spring.board.dto.BoardDto" alias="boardDto"/>
+	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mapper/board.xml" />

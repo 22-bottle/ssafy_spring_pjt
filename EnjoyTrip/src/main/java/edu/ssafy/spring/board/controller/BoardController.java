@@ -24,9 +24,9 @@ import edu.ssafy.spring.user.dto.UserDto;
 import edu.ssafy.spring.util.PageNavigation;
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/board")
-@Slf4j
 public class BoardController {
 
 	private BoardService boardService;
@@ -38,6 +38,25 @@ public class BoardController {
 		super();
 		this.boardService = boardService;
 		this.commentService = commentService;
+	}
+
+	@GetMapping("/list")
+	public ModelAndView list(@RequestParam Map<String, String> map, ModelAndView mav) {
+		log.debug("list parameter pgno : {}", map.get("pgno"));
+		try {
+			List<BoardDto> list = boardService.listArticle(map);
+			PageNavigation pageNavigation = boardService.makePageNavigation(map);
+			mav.addObject("articles", list);
+			mav.addObject("navigation", pageNavigation);
+			mav.addObject("key", map.get("key"));
+			mav.addObject("word", map.get("word"));
+			mav.setViewName("/board/list");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mav.setViewName("/error/error");
+			return mav;
+		}
+		return mav;
 	}
 
 	@GetMapping("/write")
@@ -67,37 +86,6 @@ public class BoardController {
 		} else {
 			return "/user/login";
 		}
-	}
-
-	@GetMapping("/list")
-	public ModelAndView list(@RequestParam(required = false) String pgno,
-							 @RequestParam(required = false) String key,
-							 @RequestParam(required = false) String word,
-							 HttpSession session) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		try {
-			Map<String, String> map = new HashMap<>();
-			map.put("pgno", pgno + ""); // 페이지 번호
-			map.put("key", key); // 검색 조건
-			map.put("word", word); // 검색어
-			
-			// session에 pgno 붙여서 보냄(글목록)
-			session.setAttribute("pgno", map.get("pgno"));
-			
-			List<BoardDto> list = boardService.listArticle(map);
-			PageNavigation pageNavigation = boardService.makePageNavigation(map);
-			mav.addObject("articles", list);
-			mav.addObject("navigation", pageNavigation);
-			mav.addObject("pgno", map.get("pgno"));
-			mav.addObject("key", map.get("key"));
-			mav.addObject("word", map.get("word"));
-			mav.setViewName("board/list");
-		} catch (Exception e) {
-			e.printStackTrace();
-			mav.addObject("msg", "글목록 출력 중 문제가 발생했어요!😥");
-			mav.setViewName("error/error");
-		}
-		return mav;
 	}
 
 	@GetMapping("/view")

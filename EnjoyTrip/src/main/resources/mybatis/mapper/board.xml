@@ -6,29 +6,29 @@
 <mapper namespace="edu.ssafy.spring.board.model.mapper.BoardMapper">
 
     <!-- 글 작성 -->
-    <insert id="writeArticle" parameterType="edu.ssafy.spring.board.dto.BoardDto">
+    <insert id="writeArticle" parameterType="boardDto">
         INSERT INTO board (user_id, subject, content)
         VALUES (#{userId}, #{subject}, #{content})
     </insert>
 
     <!-- 글 목록 -->
-    <select id="listArticle" parameterType="map" resultType="edu.ssafy.spring.board.dto.BoardDto">
+    <select id="listArticle" parameterType="map" resultType="boardDto">
         SELECT article_no, user_id, subject, content, hit, comment_cnt, register_time
         FROM board
-<!--         <where>
+		<where>
             <if test="key != null and word != null">
                 <choose>
                     <when test="key == 'subject'">
                         subject LIKE CONCAT('%', #{word}, '%')
                     </when>
                     <otherwise>
-                        ${key} = #{word}
+                        #{key} = #{word}
                     </otherwise>
                 </choose>
             </if>
         </where>
         ORDER BY article_no DESC
-        LIMIT #{start}, #{listsize} -->
+        LIMIT #{start}, #{listsize}
     </select>
 
     <!-- 글 개수 -->
@@ -42,7 +42,7 @@
                         subject LIKE CONCAT('%', #{word}, '%')
                     </when>
                     <otherwise>
-                        ${key} = #{word}
+                        #{key} = #{word}
                     </otherwise>
                 </choose>
             </if>
@@ -50,7 +50,7 @@
     </select>
 
     <!-- 글 상세 -->
-    <select id="getArticle" parameterType="int" resultType="edu.ssafy.spring.board.dto.BoardDto">
+    <select id="getArticle" parameterType="int" resultType="boardDto">
         SELECT article_no, user_id, subject, content, hit, register_time
         FROM board
         WHERE article_no = #{articleNo}
@@ -64,7 +64,7 @@
     </update>
 
     <!-- 글 수정 -->
-    <update id="modifyArticle" parameterType="edu.ssafy.spring.board.dto.BoardDto">
+    <update id="modifyArticle" parameterType="boardDto">
         UPDATE board
         SET subject = #{subject}, content = #{content}
         WHERE article_no = #{articleNo}

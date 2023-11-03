@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <he	ad>
+  <head>
   	<%@ include file="./include/head.jsp" %>
   </head>
 
