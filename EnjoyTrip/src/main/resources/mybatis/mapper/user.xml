@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.ssafy.spring.user.model.mapper.UserMapper">
+	<!-- resultMap -->
+	<resultMap type="edu.ssafy.spring.user.dto.UserDto" id="checkId">
+		<result column="user_password" property="userId"/>
+		<result column="salt" property="salt"/>
+	</resultMap>
+	
+    <!-- loginUser -->
+    <select id="loginUser" parameterType="edu.ssafy.spring.user.dto.UserDto" resultMap="checkId">
+        SELECT user_password, salt FROM user WHERE user_id = #{userId}
+    </select>
+
+    <!-- registUser -->
+    <insert id="registUser" parameterType="edu.ssafy.spring.user.dto.UserDto">
+        INSERT INTO user (user_id, user_name, user_password, email_id, email_domain, salt)
+        VALUES (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, #{salt})
+    </insert>
+
+    <!-- findUser -->
+    <select id="findUser" parameterType="edu.ssafy.spring.user.dto.UserDto" resultType="boolean">
+        SELECT * FROM user WHERE user_id = #{userId} AND user_name = #{userName}
+    </select>
+
+    <!-- getUser -->
+    <select id="getUser" parameterType="string" resultType="edu.ssafy.spring.user.dto.UserDto">
+        SELECT * FROM user WHERE user_id = #{userId}
+    </select>
+
+    <!-- getSalt -->
+    <select id="getSalt" parameterType="string" resultType="string">
+        SELECT salt FROM user WHERE user_id = #{userId}
+    </select>
+
+    <!-- updateUser -->
+    <update id="updateUser" parameterType="edu.ssafy.spring.user.dto.UserDto">
+        UPDATE user
+        SET user_name = #{userName}, user_password = #{userPassword}, email_id = #{emailId}, email_domain = #{emailDomain}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- deleteUser -->
+    <delete id="deleteUser" parameterType="string">
+        DELETE FROM user WHERE user_id = #{userId}
+    </delete>
+
+</mapper>

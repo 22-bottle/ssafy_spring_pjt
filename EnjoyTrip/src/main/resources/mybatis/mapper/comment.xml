@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="edu.ssafy.spring.comment.model.mapper.CommentMapper">
+
+	<!-- addComment -->
+	<insert id="addComment"
+		parameterType="edu.ssafy.spring.comment.dto.CommentDto">
+		INSERT INTO comment (article_no, user_id, comment_content)
+		VALUES (#{articleNo}, #{userId}, #{commentContent})
+	</insert>
+
+	<!-- listComment -->
+	<select id="listComment" parameterType="int"
+		resultType="edu.ssafy.spring.comment.dto.CommentDto">
+		SELECT comment_no, article_no, user_id, comment_content, register_time
+		FROM comment
+		WHERE article_no = #{articleNo}
+	</select>
+
+	<!-- deleteComment -->
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM comment
+		WHERE comment_no = #{commentNo}
+	</delete>
+
+	<!-- deleteComments -->
+	<delete id="deleteComments" parameterType="int">
+		DELETE FROM comment
+		WHERE article_no = #{articleNo}
+	</delete>
+	
+</mapper>
