@@ -5,7 +5,7 @@
     
 <script>
 	alert("회원탈퇴가 완료되었어요!");
-	location.href = "${root}/user?action=logout";
+	location.href = "${root}/user/logout";
 </script>
  
  

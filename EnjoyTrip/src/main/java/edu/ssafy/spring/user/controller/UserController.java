@@ -48,7 +48,7 @@ public class UserController extends HttpServlet {
     @PostMapping("/delete")
     public String delete(@RequestParam String userId) {
         int cnt = service.deleteUser(userId);
-        return cnt > 0 ? "redirect:/include/deletesuccess" : "redirect:/include/deletefail";
+        return cnt > 0 ? "include/deletesuccess" : "include/deletefail";
     }
 
     @PostMapping("/regist")

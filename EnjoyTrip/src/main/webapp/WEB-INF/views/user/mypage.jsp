@@ -116,7 +116,7 @@
     document.querySelector("#deleteUser").addEventListener("click", function () {
         alert("정말로 탈퇴하시겠어요?😥");
         let form = document.querySelector("#user-modify");
-        form.setAttribute("action", "${root}/user?action=delete");
+        form.setAttribute("action", "${root}/user/delete");
         form.submit();
       });
     </script>
