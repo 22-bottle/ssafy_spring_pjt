@@ -55,10 +55,10 @@ public class UserController extends HttpServlet {
     public String regist(@ModelAttribute UserDto userDto) throws IOException {
     	try {
     		service.registUser(userDto);
-    		return "redirect:/include/joinsuccess";
+    		return "include/joinsuccess";
     	} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:/error/error";
+			return "error/error";
 		}
         
     }
