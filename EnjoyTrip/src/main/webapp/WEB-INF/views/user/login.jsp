@@ -36,7 +36,7 @@
 					<label for="id">아이디 </label> 
 				</div>
 				<div class="col">
-					<input type="text" class="form-control" id="id" name="id" placeholder="" value="${id }">
+					<input type="text" class="form-control" id="id" name="userId" placeholder="" value="${id }">
 				</div>
 			</div>
 			
@@ -46,7 +46,7 @@
 					<label for="pw">패스워드 </label> 
 				</div>
 				<div class="col">
-					<input type="password" class="form-control" id="pw" name="pw" placeholder="">
+					<input type="password" class="form-control" id="pw" name="userPassword" placeholder="">
 				</div>
 			</div>
 			

@@ -57,12 +57,11 @@ public class UserController extends HttpServlet {
     }
 
     @PostMapping("/login")
-	private void login(UserDto userDto, 
+	private void login(@ModelAttribute UserDto userDto, 
 						 @RequestParam(required = false) String remember,
 						 HttpServletRequest request,
 						 HttpServletResponse response,
 						 HttpSession session) throws IOException {
-    	System.out.println("ctr "+ userDto);
 		boolean login = service.loginUser(userDto);
 		
 		if(login) {
