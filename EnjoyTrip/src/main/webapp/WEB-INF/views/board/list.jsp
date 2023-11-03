@@ -72,13 +72,13 @@
             <tbody>    
 				<c:forEach var="article" items="${articles}">    
 	              <tr class="text-center">
-	                <th scope="row">${article.getArticleNo()}</th>
+	                <th scope="row">${article.article_no}</th>
 	                <td class="text-start">
 	                
 	                  <a
 	                    href="#"
 	                    class="article-title link-dark"
-	                    data-no="${article.getArticleNo()}"
+	                    data-no="${article.article_no}"
 	                    style="text-decoration: none"
 	                  >
 	                  
@@ -93,10 +93,10 @@
 	                    
 	                  </a>
 	                </td>
-	                <td>${article.userId}</td>
+	                <td>${article.user_id}</td>
 	                <td>${article.hit}</td>
-	                <td>${article.commentCnt}</td>
-	                <td>${article.registerTime}</td>
+	                <td>${article.comment_cnt}</td>
+	                <td>${article.register_time}</td>
 	              </tr>            
 				</c:forEach>   
             </tbody>
@@ -125,12 +125,12 @@
       let titles = document.querySelectorAll(".article-title");
       titles.forEach(function (title) {
         title.addEventListener("click", function () {
-          location.href = "${root}/board?action=view&articleno=" + this.getAttribute("data-no");
+          location.href = "${root}/board/view&articleno=" + this.getAttribute("data-no");
         });
       });
 
       document.querySelector("#btn-mv-register").addEventListener("click", function () {
-        location.href = "${root}/board?action=mvwrite";
+        location.href = "${root}/board/write";
       });
       
       document.querySelector("#btn-search").addEventListener("click", function () {

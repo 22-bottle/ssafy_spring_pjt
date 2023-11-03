@@ -1,6 +1,5 @@
 package edu.ssafy.spring.board.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,24 +59,25 @@ public class BoardController {
 	}
 
 	@GetMapping("/write")
-	public String write(@RequestParam Map<String, String> map, Model model) {
-		model.addAttribute("pgno", map.get("pgno"));
-		model.addAttribute("key", map.get("key"));
-		model.addAttribute("word", map.get("word"));
-		return "board/write";
+	public ModelAndView write(@RequestParam Map<String, String> map, ModelAndView mav) {
+		mav.addObject("pgno", map.get("pgno"));
+		mav.addObject("key", map.get("key"));
+		mav.addObject("word", map.get("word"));
+		mav.setViewName("/board/write");
+		return mav;
 	}
 
 	@PostMapping("/write")
-	public String write(BoardDto boardDto, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
-		UserDto userDto = (UserDto) session.getAttribute("userinfo");
-		if (userDto.getUserId() != null) {
+	public String write(BoardDto boardDto, RedirectAttributes redirectAttributes, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("userInfo");
+		if (userDto != null) {
 			try {
-				boardDto.setUserId(userDto.getUserId());
+				boardDto.setUser_id(userDto.getUserId());
 				boardService.writeArticle(boardDto);
 				redirectAttributes.addAttribute("pgno", "1");
 				redirectAttributes.addAttribute("key", "");
 				redirectAttributes.addAttribute("word", "");
-				return "redirect:/article/list";
+				return "redirect:/board/list";
 			} catch (Exception e) {
 				e.printStackTrace();
 				redirectAttributes.addAttribute("msg", "글작성 중 문제가 발생했어요!😥");

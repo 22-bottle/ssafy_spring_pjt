@@ -61,7 +61,7 @@
 					} else {
 						let form = document.querySelector("#form-register");
 						form.setAttribute("action",
-								"${root}/board?action=write");
+								"${root}/board/write");
 						form.submit();
 					}
 				});
