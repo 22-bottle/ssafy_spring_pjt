@@ -89,7 +89,8 @@ public class BoardController {
 	}
 
 	@GetMapping("/view")
-	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model) throws Exception {
+	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model) {
+		System.out.println(articleNo);
 		try {
 			BoardDto boardDto = boardService.getArticle(articleNo);
 			List<CommentDto> list = commentService.listComment(articleNo);
@@ -99,16 +100,17 @@ public class BoardController {
 			model.addAttribute("key", map.get("key"));
 			model.addAttribute("word", map.get("word"));
 			model.addAttribute("comments", list);
-			return "board/view";
+			return "/board/view";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "글내용 출력 중 문제가 발생했어요!😥");
 			return "/error/error";
 		}
 	}
-	
+
 	@GetMapping("/modify")
-	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model, HttpSession session) throws Exception {
+	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model,
+			HttpSession session) throws Exception {
 		try {
 			UserDto userDto = (UserDto) session.getAttribute("userInfo");
 			if (userDto.getUserId() != null) {
@@ -129,9 +131,10 @@ public class BoardController {
 	}
 
 	@PostMapping("/modify")
-	public String modify(BoardDto boardDto, @RequestParam Map<String, String> map, RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
+	public String modify(BoardDto boardDto, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		UserDto userDto = (UserDto) session.getAttribute("userInfo");
-		if(userDto.getUserId() != null) {
+		if (userDto.getUserId() != null) {
 			try {
 				boardService.modifyArticle(boardDto);
 				redirectAttributes.addAttribute("pgno", map.get("pgno"));
@@ -147,14 +150,12 @@ public class BoardController {
 			return "/user/login";
 		}
 	}
-	
+
 	@GetMapping("/delete")
-	public String delete(@RequestParam("articleno") int articleNo, 
-						 @RequestParam Map<String, String> map, 
-						RedirectAttributes redirectAttributes, 
-						HttpSession session) throws Exception {
+	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
+			RedirectAttributes redirectAttributes, HttpSession session) throws Exception {
 		UserDto userDto = (UserDto) session.getAttribute("userInfo");
-		if(userDto != null) {
+		if (userDto != null) {
 			try {
 				boardService.deleteArticle(articleNo);
 				redirectAttributes.addAttribute("pgno", map.get("pgno"));
@@ -170,52 +171,48 @@ public class BoardController {
 			return "/user/login";
 		}
 	}
-	
-	 @PostMapping("/commentAdd")
-	    public String commentAdd( @RequestParam("articleNo") int articleNo,
-	                              @RequestParam("comment") String commentContent,
-	                             Model model, 
-	                             HttpSession session) {
-		 	UserDto userDto = (UserDto) session.getAttribute("userInfo");
-	        if (userDto != null && userDto.getUserId() != null) {
-	            CommentDto commentDto = new CommentDto();
-	            commentDto.setArticleNo(articleNo);
-	            commentDto.setUserId(userDto.getUserId());
-	            commentDto.setCommentContent(commentContent);
 
-	            try {
-	                commentService.addComment(commentDto);
-	                boardService.updateCommentCnt(commentDto);
-	                return "redirect:/view?articleno=" + articleNo;
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	                model.addAttribute("msg", "댓글 작성 중 문제가 발생했어요!😥");
-	                return "/error/error";
-	            }
-	        } else {
-	            return "redirect:/user/login";
-	        }
-	    }
+	@PostMapping("/commentAdd")
+	public String commentAdd(@RequestParam("articleNo") int articleNo, @RequestParam("comment") String commentContent,
+			Model model, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("userInfo");
+		if (userDto != null && userDto.getUserId() != null) {
+			CommentDto commentDto = new CommentDto();
+			commentDto.setArticleNo(articleNo);
+			commentDto.setUserId(userDto.getUserId());
+			commentDto.setCommentContent(commentContent);
 
-	    @PostMapping("/commenDelete")
-	    public String commentDelete(@RequestParam("articleno") int articleNo,
-	                                @RequestParam("commentno") int commentNo,
-	                                Model model, 
-	                                HttpSession session) {
-	    	UserDto userDto = (UserDto) session.getAttribute("userInfo");
-	        if (userDto != null && userDto.getUserId() != null) {
-	            try {
-	                commentService.deleteComment(commentNo);
-	                boardService.deleteCommentCnt(articleNo);
-	                return "redirect:/board?action=view&articleno=" + articleNo;
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	                model.addAttribute("msg", "댓글 삭제 중 문제가 발생했어요!😥");
-	                return "/error/error";
-	            }
-	        } else {
-	            return "redirect:/user/login";
-	        }
-	    }
-	
+			try {
+				commentService.addComment(commentDto);
+				boardService.updateCommentCnt(commentDto);
+				return "redirect:/view?articleno=" + articleNo;
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("msg", "댓글 작성 중 문제가 발생했어요!😥");
+				return "/error/error";
+			}
+		} else {
+			return "redirect:/user/login";
+		}
+	}
+
+	@PostMapping("/commenDelete")
+	public String commentDelete(@RequestParam("articleno") int articleNo, @RequestParam("commentno") int commentNo,
+			Model model, HttpSession session) {
+		UserDto userDto = (UserDto) session.getAttribute("userInfo");
+		if (userDto != null && userDto.getUserId() != null) {
+			try {
+				commentService.deleteComment(commentNo);
+				boardService.deleteCommentCnt(articleNo);
+				return "redirect:/board?action=view&articleno=" + articleNo;
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("msg", "댓글 삭제 중 문제가 발생했어요!😥");
+				return "/error/error";
+			}
+		} else {
+			return "redirect:/user/login";
+		}
+	}
+
 }

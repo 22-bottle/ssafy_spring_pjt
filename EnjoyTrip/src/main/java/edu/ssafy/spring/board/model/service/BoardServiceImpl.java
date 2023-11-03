@@ -59,7 +59,6 @@ public class BoardServiceImpl implements BoardService {
 		Map<String, Object> param = new HashMap<String, Object>();
 		String key = map.get("key");
 		String word = map.get("word");
-		System.out.println(map);
 //		param.put("key", key == null ? "" : key);
 //		param.put("word", word == null ? "" : word);
 		param.put("key", key);

@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="root" value="${pageContext.request.contextPath }"></c:set>
 <c:if test="${article eq null}">
 	<script>
 	alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
-	location.href = "${root}/board?action=list";
+	location.href = "/board/list";
 	</script>
 </c:if>
 	
@@ -40,8 +39,8 @@
                 <img class="avatar me-2 float-md-start bg-light p-2"
                      src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
                 <p>
-                  <span class="fw-bold">${article.userId}</span> <br />
-                  <span class="text-secondary fw-light"> ${article.registerTime}  |  글번호 : ${article.getArticleNo()}  |  조회 : ${article.hit} </span>
+                  <span class="fw-bold">${article.user_id}</span> <br />
+                  <span class="text-secondary fw-light"> ${article.register_time}  |  글번호 : ${article.article_no}  |  조회 : ${article.hit} </span>
                 </p>
               </div>
             </div>
@@ -61,7 +60,7 @@
             <div class="divider mt-3 mb-3"></div>
             <div class="d-flex justify-content-end">
               <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">글목록</button>
-              <c:if test="${userInfo.userId eq article.userId}">
+              <c:if test="${userInfo.userId eq article.user_id}">
 	              <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1"> 글수정</button>
 	              <button type="button" id="btn-delete" class="btn btn-outline-danger mb-3 ms-1"> 글삭제	</button>
               </c:if>
@@ -81,7 +80,7 @@
         
 		  <form id="comment-regist" method="POST" action="">
 		    <input type="hidden" name="action" value="regist">
-		    <input type="hidden" name="articleNo" value="${article.getArticleNo()}">
+		    <input type="hidden" name="articleNo" value="${article.article_no}">
 		    
 		    <div class="mb-3">
 		      <div class="container">
@@ -150,7 +149,7 @@
 			            
 			            <div class="col-md-2">
 						    <button type="button" id="comment-delete-${comment.commentNo}" name="comment-delete" 
-						      article-no="${article.articleNo}" comment-no="${comment.commentNo}" 
+						      article-no="${article.article_no}" comment-no="${comment.commentNo}" 
 						      class="btn btn-outline-danger mb-1 ms-1">삭제</button>
 						      
 						    <script>
@@ -183,10 +182,10 @@
 	<jsp:include page="../include/footer.jsp"></jsp:include>
 	
     <!-- 로그인==글작성자 일 때 동작 -->
-    <c:if test="${userInfo.userId eq article.userId}">
+    <c:if test="${userInfo.userId eq article.user_id}">
     	<script>
     		document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-            	location.href = "${root}/board?action=mvmodify&articleno=${article.getArticleNo()}";
+            	location.href = "/board/modify&articleno=${article.getArticle_no()}";
           	});
     		
           	document.querySelector("#btn-delete").addEventListener("click", function () {
@@ -198,7 +197,7 @@
     </c:if>
     
     <!-- 로그인==댓글작성자 일 때 동작 -->
-    <c:if test="${userInfo.userId eq comment.userId}">
+    <c:if test="${userInfo.userId eq comment.user_id}">
     	
     </c:if>
     

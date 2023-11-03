@@ -125,12 +125,12 @@
       let titles = document.querySelectorAll(".article-title");
       titles.forEach(function (title) {
         title.addEventListener("click", function () {
-          location.href = "${root}/board/view&articleno=" + this.getAttribute("data-no");
+          location.href = "/board/view?articleno=" + this.getAttribute("data-no");
         });
       });
 
       document.querySelector("#btn-mv-register").addEventListener("click", function () {
-        location.href = "${root}/board/write";
+        location.href = "/board/write";
       });
       
       document.querySelector("#btn-search").addEventListener("click", function () {

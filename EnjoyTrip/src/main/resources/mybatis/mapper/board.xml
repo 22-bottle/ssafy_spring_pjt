@@ -8,7 +8,7 @@
     <!-- 글 작성 -->
     <insert id="writeArticle" parameterType="boardDto">
         INSERT INTO board (user_id, subject, content)
-        VALUES (#{userId}, #{subject}, #{content})
+        VALUES (#{user_id}, #{subject}, #{content})
     </insert>
 
     <!-- 글 목록 -->
@@ -53,41 +53,41 @@
     <select id="getArticle" parameterType="int" resultType="boardDto">
         SELECT article_no, user_id, subject, content, hit, register_time
         FROM board
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </select>
 
     <!-- 조회수 증가 -->
     <update id="updateHit" parameterType="int">
         UPDATE board
         SET hit = hit + 1
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </update>
 
     <!-- 글 수정 -->
     <update id="modifyArticle" parameterType="boardDto">
         UPDATE board
         SET subject = #{subject}, content = #{content}
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </update>
 
     <!-- 글 삭제 -->
     <delete id="deleteArticle" parameterType="int">
         DELETE FROM board
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </delete>
 
     <!-- 댓글 수 증가 -->
     <update id="updateCommentCnt" parameterType="edu.ssafy.spring.comment.dto.CommentDto">
         UPDATE board
         SET comment_cnt = comment_cnt + 1
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </update>
 
     <!-- 댓글 수 감소 -->
     <update id="deleteCommentCnt" parameterType="int">
         UPDATE board
         SET comment_cnt = comment_cnt - 1
-        WHERE article_no = #{articleNo}
+        WHERE article_no = #{article_no}
     </update>
 
 </mapper>
