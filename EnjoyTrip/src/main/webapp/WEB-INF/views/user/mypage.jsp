@@ -109,7 +109,7 @@
 	       	return;
         } else{
 			let form = document.querySelector("#user-modify");
-	        form.setAttribute("action", "${root}/user?action=update");
+	        form.setAttribute("action", "${root}/user/update");
 	        form.submit();
         }
       });

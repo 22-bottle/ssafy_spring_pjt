@@ -89,7 +89,7 @@
 	   	});
 		
 		document.querySelector("#btn-find").addEventListener("click", function(){
-			location.href = "${root}/main/find";
+			location.href = "${root}/user/find";
 		});
 	</script>
     
