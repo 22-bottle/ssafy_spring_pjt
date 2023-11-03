@@ -63,7 +63,7 @@ public class UserController extends HttpServlet {
     }
 
     @PostMapping("/login")
-	private void login(@ModelAttribute UserDto userDto, 
+	private String login(@ModelAttribute UserDto userDto, 
 						 @RequestParam(required = false) String remember,
 						 HttpServletRequest request,
 						 HttpServletResponse response,
@@ -74,23 +74,19 @@ public class UserController extends HttpServlet {
 			String userId = userDto.getUserId();
 			UserDto userInfo = service.getUser(userId);
 			session.setAttribute("userInfo", userInfo);
-			Cookie c = new Cookie("id", userId);
 			if(remember != null) {
+				Cookie c = new Cookie("id", userId);
+				c.setPath("/");
 				c.setMaxAge(60*60*24);
 				response.addCookie(c);
 			} else {
-				Cookie[] cookies = request.getCookies();
-				for(Cookie ct:cookies) {
-					if(ct.getName().equals("id")) {
-						ct.setMaxAge(0);
-						response.addCookie(ct);
-					}
-				}
+				Cookie c = new Cookie("id", userId);
+				c.setMaxAge(0);
+				response.addCookie(c);
 			}
-			System.out.println(c.getName().equals("id"));
-			response.sendRedirect("/main/loginsuccess");
+			return "redirect:/main/loginsuccess";
 		} else {
-			response.sendRedirect("/main/loginfail");
+			return "/main/loginfail";
 		}
 		
 	}
