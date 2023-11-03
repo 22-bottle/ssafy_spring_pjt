@@ -5,7 +5,7 @@
     
 <script>
 	alert("회원정보를 업데이트했어요!");
-	location.href = "${root}/user/mypage.jsp";
+	location.href = "${root}/";
 </script>
  
  

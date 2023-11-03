@@ -5,7 +5,7 @@
     
 <script>
 	alert("작성한 게시글을 먼저 삭제해주세요!😥");
-	location.href = "${root}/board?action=list";
+	location.href = "${root}/board/list";
 </script>
  
  

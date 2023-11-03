@@ -5,7 +5,7 @@
     
 <script>
 	alert("아이디 또는 비밀번호가 일치하지 않아요!😥");
-	location.href = "${root}/user/login.jsp";
+	location.href = "${root}/user/login";
 </script>
  
  

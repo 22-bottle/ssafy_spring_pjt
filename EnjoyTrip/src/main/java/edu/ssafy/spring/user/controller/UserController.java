@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,27 +42,48 @@ public class UserController extends HttpServlet {
         service.updateUser(userDto);
         UserDto userInfo = service.getUser(userDto.getUserId());
         session.setAttribute("userInfo", userInfo);
-        return "redirect:/include/updatesuccess";
+        return "include/updatesuccess";
     }
 	
     @PostMapping("/delete")
     public String delete(@RequestParam String userId) {
         int cnt = service.deleteUser(userId);
-        return cnt > 0 ? "redirect:/include/deletesuccess" : "redirect:/include/deletefail";
+        return cnt > 0 ? "include/deletesuccess" : "include/deletefail";
     }
 
     @PostMapping("/regist")
-    public void regist(@ModelAttribute UserDto userDto, HttpServletResponse response) throws IOException {
+    public String regist(@ModelAttribute UserDto userDto) throws IOException {
     	try {
     		service.registUser(userDto);
-    		response.sendRedirect("/main/joinsuccess");
+    		return "include/joinsuccess";
     	} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("/main/error");
+			return "error/error";
 		}
         
     }
-
+    
+    @GetMapping("/join")
+	private String join() {
+    	return "user/join";
+	}
+    
+    @GetMapping("/login")
+	private String login() {
+    	return "user/login";
+	}
+    
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "/index";
+	}
+	
+	@GetMapping("/mypage")
+	public String mypage() {
+		return "user/mypage";
+	}
+    
     @PostMapping("/login")
 	private String login(@ModelAttribute UserDto userDto, 
 						 @RequestParam(required = false) String remember,
@@ -84,9 +106,9 @@ public class UserController extends HttpServlet {
 				c.setMaxAge(0);
 				response.addCookie(c);
 			}
-			return "redirect:/main/loginsuccess";
+			return "include/loginsuccess";
 		} else {
-			return "/main/loginfail";
+			return "include/loginfail";
 		}
 		
 	}
