@@ -1,5 +1,7 @@
 package edu.ssafy.spring.user.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.ssafy.spring.user.dto.UserDto;
 import edu.ssafy.spring.user.model.service.UserService;
@@ -22,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
 	private UserService service;
 	
 	@Autowired
@@ -44,21 +47,22 @@ public class UserController extends HttpServlet {
     @PostMapping("/delete")
     public String delete(@RequestParam String userId) {
         int cnt = service.deleteUser(userId);
-        return cnt > 0 ? "redirect:/include/deletesuccess.jsp" : "redirect:/include/deletefail.jsp";
+        return cnt > 0 ? "redirect:/include/deletesuccess" : "redirect:/include/deletefail";
     }
 
     @PostMapping("/regist")
-    public String regist(@ModelAttribute UserDto userDto) {
+    public void regist(@ModelAttribute UserDto userDto, HttpServletResponse response) throws IOException {
         service.registUser(userDto);
-        return "redirect:/include/joinsuccess.jsp";
+        response.sendRedirect("/main/joinsuccess");
     }
 
     @PostMapping("/login")
-	private String login(@ModelAttribute UserDto userDto, 
-						 @RequestParam String remember,
+	private void login(UserDto userDto, 
+						 @RequestParam(required = false) String remember,
 						 HttpServletRequest request,
 						 HttpServletResponse response,
-						 HttpSession session) {
+						 HttpSession session) throws IOException {
+    	System.out.println("ctr "+ userDto);
 		boolean login = service.loginUser(userDto);
 		
 		if(login) {
@@ -78,9 +82,9 @@ public class UserController extends HttpServlet {
 					}
 				}
 			}
-			return "redirect:/include/loginsuccess";
+			response.sendRedirect("/main/loginsuccess");
 		} else {
-			return "redirect:/include/loginfail";
+			response.sendRedirect("/main/loginfail");
 		}
 		
 	}

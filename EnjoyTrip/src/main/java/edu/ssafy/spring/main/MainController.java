@@ -31,4 +31,24 @@ public class MainController {
 		return "/user/mypage";
 	}
 	
+	@GetMapping("/joinsuccess")
+	public String joinsuccess() {
+		return "/include/joinsuccess";
+	}
+	
+	@GetMapping("/loginsuccess")
+	public String loginsuccess() {
+		return "/include/loginsuccess";
+	}
+	
+	@GetMapping("/loginfail")
+	public String loginfail() {
+		return "/include/loginfail";
+	}
+	
+	@GetMapping("/find")
+	public String find() {
+		return "/user/find";
+	}
+	
 }

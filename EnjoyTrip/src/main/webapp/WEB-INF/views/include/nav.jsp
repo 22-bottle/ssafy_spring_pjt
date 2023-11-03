@@ -70,7 +70,7 @@
 								<a class="nav-link" href="${root}/main/mypage">${userInfo.userId }님 반가워요!</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="${root}/user?action=logout">로그아웃</a>
+								<a class="nav-link" href="${root}/user/logout">로그아웃</a>
 							</li>
 						</ul>
 					</c:otherwise>

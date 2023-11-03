@@ -1,5 +1,6 @@
 package edu.ssafy.spring.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,9 +70,20 @@ public class BoardController {
 	}
 
 	@GetMapping("/list")
-	public ModelAndView list(@RequestParam Map<String, String> map) throws Exception {
+	public ModelAndView list(@RequestParam(required = false) String pgno,
+							 @RequestParam(required = false) String key,
+							 @RequestParam(required = false) String word,
+							 HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		try {
+			Map<String, String> map = new HashMap<>();
+			map.put("pgno", pgno + ""); // 페이지 번호
+			map.put("key", key); // 검색 조건
+			map.put("word", word); // 검색어
+			
+			// session에 pgno 붙여서 보냄(글목록)
+			session.setAttribute("pgno", map.get("pgno"));
+			
 			List<BoardDto> list = boardService.listArticle(map);
 			PageNavigation pageNavigation = boardService.makePageNavigation(map);
 			mav.addObject("articles", list);

@@ -21,7 +21,7 @@
   crossorigin
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable-dynamic-subset.css"
 />
-<link rel="shortcut icon" href="./assets/img/airplane-fill.svg" />
+<link rel="shortcut icon" href="${root}/img/airplane-fill.svg" />
 <style>
   body {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -33,7 +33,7 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <title>EnjoyTrip</title>
-<link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="img/favicon.ico" rel="shortcut icon" type="${root}/img/x-icon" />
 
 <%-- 부트스트랩 사용을 위한 코드 --%>
 <!-- CSS only -->
@@ -46,5 +46,5 @@
 		
 	</c:if>
 </script>
-<link rel="stylesheet" href="../assets/css/main.css" />
-<link rel="stylesheet" href="../assets/css/style.css" />
+<link rel="stylesheet" href="${root}/css/main.css" />
+<link rel="stylesheet" href="${root}/css/style.css" />

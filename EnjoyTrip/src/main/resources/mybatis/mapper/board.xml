@@ -15,7 +15,7 @@
     <select id="listArticle" parameterType="map" resultType="edu.ssafy.spring.board.dto.BoardDto">
         SELECT article_no, user_id, subject, content, hit, comment_cnt, register_time
         FROM board
-        <where>
+<!--         <where>
             <if test="key != null and word != null">
                 <choose>
                     <when test="key == 'subject'">
@@ -28,7 +28,7 @@
             </if>
         </where>
         ORDER BY article_no DESC
-        LIMIT #{start}, #{listsize}
+        LIMIT #{start}, #{listsize} -->
     </select>
 
     <!-- 글 개수 -->

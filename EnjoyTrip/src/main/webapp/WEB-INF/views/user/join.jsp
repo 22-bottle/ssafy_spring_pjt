@@ -24,7 +24,7 @@
 	<!-- 회원가입 폼 -->
 	<div class="container d-flex justify-content-center">
       <div class="login-body pt-4 ">
-      	<form action="${root }/user?action=regist" method="post">
+      	<form action="${root }/user/regist" method="post">
 			<input type="hidden" name="action" value="login">
 			
 			<!-- 아이디 -->

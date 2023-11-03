@@ -5,7 +5,7 @@
     
 <script>
 	alert("회원가입을 성공했어요!☺️");
-	location.href = "${root}/user/login.jsp";
+	location.href = "${root}/main/login";
 </script>
  
  

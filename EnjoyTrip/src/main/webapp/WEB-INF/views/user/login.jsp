@@ -83,13 +83,13 @@
 		       	return;
 	        } else{
         		let form = document.querySelector("#form-login");
-	          	form.setAttribute("action", "${root }/user?action=login");
+	          	form.setAttribute("action", "${root}/user/login");
 	          	form.submit();
 	        }
 	   	});
 		
 		document.querySelector("#btn-find").addEventListener("click", function(){
-			location.href = "${root}/user/find.jsp";
+			location.href = "${root}/main/find";
 		});
 	</script>
     
