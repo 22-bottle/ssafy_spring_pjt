@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+-<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
         <div class="carousel-inner mb-0">
           <div class="carousel-item active">
             <div class="carousel-caption d-none d-md-block img-reponsive">
-              <h4><strong>꿀잼도시 대전으로 오세요!</strong></h4>
+              <h4><strong>꿀잼도시 대전으로 오세요!${user}</strong></h4>
               <p>📍대전 유성구 도룡동</p>
             </div>
             <img

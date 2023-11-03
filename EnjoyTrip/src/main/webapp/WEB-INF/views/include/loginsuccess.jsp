@@ -6,7 +6,7 @@
     
 <script>
 	alert("${userInfo.userId} 님 반가워요!☺️");
-	location.href = "${root}/index.jsp";
+	location.href = "${root}/main/index";
 </script>
  
  

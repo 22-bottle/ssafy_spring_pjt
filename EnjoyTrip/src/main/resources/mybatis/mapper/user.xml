@@ -6,8 +6,12 @@
 <mapper namespace="edu.ssafy.spring.user.model.mapper.UserMapper">
 	<!-- resultMap -->
 	<resultMap type="edu.ssafy.spring.user.dto.UserDto" id="checkId">
-		<result column="user_password" property="userId"/>
+		<result column="user_password" property="userPassword"/>
 		<result column="salt" property="salt"/>
+	</resultMap>
+	
+	<resultMap type="edu.ssafy.spring.user.dto.UserDto" id="user">
+		<result column="user_id" property="userId"/>
 	</resultMap>
 	
     <!-- loginUser -->
@@ -23,11 +27,11 @@
 
     <!-- findUser -->
     <select id="findUser" parameterType="edu.ssafy.spring.user.dto.UserDto" resultType="boolean">
-        SELECT * FROM user WHERE user_id = #{userId} AND user_name = #{userName}
+        SELECT * FROM user WHERE userId = #{userId} AND user_name = #{userName}
     </select>
 
     <!-- getUser -->
-    <select id="getUser" parameterType="string" resultType="edu.ssafy.spring.user.dto.UserDto">
+    <select id="getUser" parameterType="string" resultMap="user">
         SELECT * FROM user WHERE user_id = #{userId}
     </select>
 

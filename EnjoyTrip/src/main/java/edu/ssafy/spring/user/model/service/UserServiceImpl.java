@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService{
 
 	public boolean loginUser(UserDto userDto) {
 		// 암호화로 확인
-		System.out.println(userDto.getUserPassword());
-		System.out.println(encrypt.getEncrypt(userDto.getUserPassword(), userDto.getSalt()));
-		if(userDto.getUserPassword().equals(encrypt.getEncrypt(userDto.getUserPassword(), userDto.getSalt()))) {
+		String userPw = userDto.getUserPassword();
+		userDto = userMapper.loginUser(userDto);
+		if(userDto.getUserPassword().equals(encrypt.getEncrypt(userPw, userDto.getSalt()))) {
 			return true;
 		}
 		return false;
@@ -46,7 +46,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto getUser(String userId) {
-		return userMapper.getUser(userId);
+		UserDto dto = userMapper.getUser(userId);
+		return dto;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package edu.ssafy.spring.main;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,4 +53,14 @@ public class MainController {
 		return "/user/find";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "/index";
+	}
+	
+	@GetMapping("/error")
+	public String error() {
+		return "/error/error";
+	}
 }
