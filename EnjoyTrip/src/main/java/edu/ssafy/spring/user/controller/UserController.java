@@ -52,36 +52,42 @@ public class UserController extends HttpServlet {
 
     @PostMapping("/regist")
     public void regist(@ModelAttribute UserDto userDto, HttpServletResponse response) throws IOException {
-        service.registUser(userDto);
-        response.sendRedirect("/main/joinsuccess");
+    	try {
+    		service.registUser(userDto);
+    		response.sendRedirect("/main/joinsuccess");
+    	} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("/main/error");
+		}
+        
     }
 
     @PostMapping("/login")
-	private void login(UserDto userDto, 
+	private void login(@ModelAttribute UserDto userDto, 
 						 @RequestParam(required = false) String remember,
 						 HttpServletRequest request,
 						 HttpServletResponse response,
 						 HttpSession session) throws IOException {
-    	System.out.println("ctr "+ userDto);
 		boolean login = service.loginUser(userDto);
 		
 		if(login) {
 			String userId = userDto.getUserId();
 			UserDto userInfo = service.getUser(userId);
 			session.setAttribute("userInfo", userInfo);
+			Cookie c = new Cookie("id", userId);
 			if(remember != null) {
-				Cookie c = new Cookie("id", userId);
 				c.setMaxAge(60*60*24);
 				response.addCookie(c);
 			} else {
 				Cookie[] cookies = request.getCookies();
-				for(Cookie c:cookies) {
-					if(c.getName().equals("id")) {
-						c.setMaxAge(0);
-						response.addCookie(c);
+				for(Cookie ct:cookies) {
+					if(ct.getName().equals("id")) {
+						ct.setMaxAge(0);
+						response.addCookie(ct);
 					}
 				}
 			}
+			System.out.println(c.getName().equals("id"));
 			response.sendRedirect("/main/loginsuccess");
 		} else {
 			response.sendRedirect("/main/loginfail");

@@ -7,7 +7,7 @@ import edu.ssafy.spring.user.dto.UserDto;
 @Mapper
 public interface UserMapper {
 	
-	boolean loginUser(UserDto userDto);
+	UserDto loginUser(UserDto userDto);
 	int registUser(UserDto userDto);
 	boolean findUser(UserDto userDto);
 	UserDto getUser(String userId);

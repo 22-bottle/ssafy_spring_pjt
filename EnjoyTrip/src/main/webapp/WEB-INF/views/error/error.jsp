@@ -20,7 +20,7 @@
 	    </div>
 	    
 	    <div class="d-flex justify-content-center">
-	       <button type="button" id="btn-mv-register" class="btn btn-outline-primary btn-sm" href="${root }/index.jsp">메인으로  돌아가기 </button>
+	       <a type="button" id="btn-mv-register" class="btn btn-outline-primary btn-sm" href="${root}/main/index">메인으로  돌아가기 </a>
 	     </div>
 	</div>
 	
