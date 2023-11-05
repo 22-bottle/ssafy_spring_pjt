@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<jsp:include page="/include/head.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/assets/js/trip.js"></script>
+<%@ include file="../include/head.jsp" %>
+<script src="${pageContext.request.contextPath}/js/trip.js"></script>
 </head>
 <body>
 	<!-- Include Navigation Bar -->
-	<jsp:include page="/include/nav.jsp"></jsp:include>
+	<%@ include file="../include/nav.jsp" %>
 
 	<div class="container">
 		<!--지역별 여행지 start-->
@@ -100,85 +100,84 @@
      	function sendRequest(selid, regcode, area) {
     	  //console.log("selid: " + selid + " area: "+area);
     	  //console.log(regcode);
-		  const url = "/EnjoyTrip/trip";
+		  const url = "/trip/option";
 		  let params = "regcode_pattern=" + selid + "&regcode=" + regcode + "&area="+area;
 		
 		  // AJAX 요청
 		  var request = new XMLHttpRequest();
-		  request.open("GET", url + "?" + params, true);
-		  request.onreadystatechange = function () {
-		    if (request.readyState === 4 && request.status === 200) {
-		    	var data = JSON.parse(request.responseText);
-		      if ( "detail" != selid) {
-		      	addOption(selid, data);
-		      }
-		      else {
-		    	  let infoList = ``;
-		    	  data.regcodes.forEach(function(item) {
-		    		  title = item.title;
-		    		  addr = item.addr;
-		    		  img = item.img;
+	        request.open("GET", url + "?" + params, true);
+	        request.onreadystatechange = function () {
+	            if (request.readyState === 4 && request.status === 200) {
+	                // JSON 문자열을 객체로 변환
+	                var data = JSON.parse(request.responseText);
+	                if (selid !== "detail") {
+	                    // JSON 객체를 사용하여 옵션 추가
+	                    addOption(selid, JSON.parse(data.area));
+	                } else {
+	                    // 여행지 상세정보를 처리하는 부분
+	                    let infoList = ``;
+	                    data.regcodes.forEach(function(item) {
+	                        let title = item.title;
+	                        let addr = item.addr;
+	                        let img = item.img;
 
-		    		  //console.log("Title:", title);
-		    		  //console.log("Address:", addr);
-		    		  //console.log("Image URL:", img);
-		    		  infoList += `
-		    			  <tr>
-		    			    <td><img src="\${img}" width="100px"></td>
-		    			    <td>\${title}</td>
-		    			    <td>\${addr}</td>
-		    			  </tr>
-		    			`;
-		    		});
-		    	  document.getElementById("trip-list").innerHTML = infoList;
-		      }
-		    }
-		  };
-		  request.send();
-		}
+	                        infoList += `
+	                            <tr>
+	                                <td><img src="${img}" width="100px"></td>
+	                                <td>${title}</td>
+	                                <td>${addr}</td>
+	                            </tr>
+	                        `;
+	                    });
+	                    document.getElementById("trip-list").innerHTML = infoList;
+	                }
+	            }
+	        };
+	        request.send();
+	    }
+        
+     	function addOption(selid, data) {
+            let opt = ``;
+            initOption(selid);
 
-        function addOption(selid, data) {
-          let opt = ``;
-          initOption(selid);
-
-          switch (selid) {
-            case "sido":
-              opt += `<option value="">시도선택</option>`;
-              data.regcodes.forEach(function (regcode) {
-                opt += `
-                  <option value="\${regcode.code}">\${regcode.name}</option>
-                  `;
-              });
-              break;
-            case "gugun":
-              opt += `<option value="">구군선택</option>`;
-              for (let i = 0; i < data.regcodes.length; i++) {
-                if (i != data.regcodes.length - 1) {
-                  if (
-                    data.regcodes[i].name.split(" ")[1] == data.regcodes[i + 1].name.split(" ")[1] &&
-                    data.regcodes[i].name.split(" ").length != data.regcodes[i + 1].name.split(" ").length
-                  ) {
-                    data.regcodes.splice(i, 1);
-                    i--;
-                  }
-                }
-              }
-              let name = "";
-              data.regcodes.forEach(function (regcode) {
-                if (regcode.name.split(" ").length == 2) name = regcode.name.split(" ")[1];
-                else name = regcode.name.split(" ")[1] + " " + regcode.name.split(" ")[2];
-                opt += `
-                  <option value="\${regcode.code}">\${name}</option>
-                  `;
-              });
-              break;
-          }
-          document.querySelector("#" + selid).innerHTML = opt;
+            switch (selid) {
+                case "sido":
+                    opt += `<option value="">시도선택</option>`;
+                    data.regcodes.forEach(function (regcode) {
+                      opt += `
+                        <option value="\${regcode.code}">\${regcode.name}</option>
+                        `;
+                    });
+                    break;
+                case "gugun":
+                    opt += `<option value="">구군선택</option>`;
+                    for (let i = 0; i < data.regcodes.length; i++) {
+                      if (i != data.regcodes.length - 1) {
+                        if (
+                          data.regcodes[i].name.split(" ")[1] == data.regcodes[i + 1].name.split(" ")[1] &&
+                          data.regcodes[i].name.split(" ").length != data.regcodes[i + 1].name.split(" ").length
+                        ) {
+                          data.regcodes.splice(i, 1);
+                          i--;
+                        }
+                      }
+                    }
+                    let name = "";
+                    data.regcodes.forEach(function (regcode) {
+                      if (regcode.name.split(" ").length == 2) name = regcode.name.split(" ")[1];
+                      else name = regcode.name.split(" ")[1] + " " + regcode.name.split(" ")[2];
+                      opt += `
+                        <option value="\${regcode.code}">\${name}</option>
+                        `;
+                    });
+                    break;
+            }
+            document.querySelector("#" + selid).innerHTML = opt;
         }
 
         function initOption(selid) {
-           let options = document.querySelector("#"+selid);
-          options.length = 0;
+            let options = document.querySelector("#"+selid);
+            options.length = 0;
         }
 
       </script>
@@ -190,7 +189,7 @@
 		integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 		crossorigin="anonymous"></script>
 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=066c4bf5fb8745fcc2b066ec145bb938&libraries=services,clusterer,drawing"></script>
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9279a4bc661b8f08442322e95e06d92&libraries=services,clusterer,drawing"></script>
 	<script>
         // 카카오지도
         var mapContainer = document.getElementById("map"), // 지도를 표시할 div
@@ -206,7 +205,7 @@
 	<!-- Include Footer -->
 	<div
 		style="left: 0; bottom: 0; width: 100%; background-color: #f0f0f0; text-align: center;">
-		<jsp:include page="/include/footer.jsp"></jsp:include>
+		<jsp:include page="../include/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

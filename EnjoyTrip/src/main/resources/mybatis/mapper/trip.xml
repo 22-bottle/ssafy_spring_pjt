@@ -4,30 +4,70 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="edu.ssafy.spring.trip.model.mapper.TripMapper">
+	<select id="attractionList"
+		resultType="edu.ssafy.spring.trip.dto.AttractionInfoDto">
+		SELECT * FROM attraction_info
+		<where>
+			<if test="attractionInfoDto.sidoCode != 0">
+				AND sido_code = #{attractionInfoDto.sidoCode}
+			</if>
+			<if test="attractionInfoDto.contentType != 0">
+				AND content_type_id = #{attractionInfoDto.contentType}
+			</if>
+		</where>
+	</select>
 
-    <!-- addComment -->
-    <insert id="addComment" parameterType="edu.ssafy.spring.comment.dto.CommentDto">
-        INSERT INTO comment (article_no, user_id, comment_content)
-        VALUES (#{articleNo}, #{userId}, #{commentContent})
-    </insert>
+	<select id="searchByTitle"
+		resultType="edu.ssafy.spring.trip.dto.AttractionInfoDto">
+		SELECT * FROM attraction_info
+		WHERE title LIKE CONCAT('%', #{title},
+		'%')
+		<if test="sidoCode != 0">
+			AND sido_code = #{sidoCode}
+		</if>
+	</select>
 
-    <!-- listComment -->
-    <select id="listComment" parameterType="int" resultType="edu.ssafy.spring.comment.dto.CommentDto">
-        SELECT comment_no, article_no, user_id, comment_content, register_time
-        FROM comment
-        WHERE article_no = #{articleNo}
-    </select>
 
-    <!-- deleteComment -->
-    <delete id="deleteComment" parameterType="int">
-        DELETE FROM comment
-        WHERE comment_no = #{commentNo}
-    </delete>
+<select id="searchArea" resultType="edu.ssafy.spring.trip.dto.AreaInfoDto">
+    <choose>
+        <when test="scope == 'gugun'">
+            SELECT gugun_code AS code, CONCAT(#{area}, ' ', gugun_name) AS name
+            FROM gugun
+            WHERE sido_code = #{regcode}
+        </when>
+        <otherwise>
+            SELECT sido_code AS code, CONCAT(#{area}, ' ', sido_name) AS name
+            FROM sido
+        </otherwise>
+    </choose>
+</select>
 
-    <!-- deleteComments -->
-    <delete id="deleteComments" parameterType="int">
-        DELETE FROM comment
-        WHERE article_no = #{articleNo}
-    </delete>
 
+<!--     <select id="searchArea" resultType="edu.ssafy.spring.trip.dto.AreaInfoDto">
+        SELECT 
+            CASE 
+                WHEN '${scope}' = 'gugun' THEN gugun_code 
+                ELSE sido_code 
+            END AS code,
+            CONCAT(#{area}, ' ', 
+                CASE 
+                    WHEN ${scope} = 'gugun' THEN gugun_name 
+                    ELSE sido_name 
+                END) AS name
+        FROM 
+            ${scope}
+        <if test="scope == 'gugun'">
+            WHERE sido_code = #{regcode}
+        </if>
+    </select> -->
+
+<!--     <select id="searchArea" resultType="edu.ssafy.spring.trip.dto.AreaInfoDto">
+        SELECT sido_code code , sido_name name
+        FROM 
+            ${scope}
+        <if test="scope == 'gugun'">
+            WHERE sido_code = #{regcode}
+        </if>
+    </select> -->
+    
 </mapper>

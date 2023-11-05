@@ -1,55 +1,59 @@
 package edu.ssafy.spring.trip.controller;
 
-import java.util.List;
+import edu.ssafy.spring.trip.dto.AreaDto;
+import edu.ssafy.spring.trip.dto.AttractionInfoDto;
+import edu.ssafy.spring.trip.model.service.TripService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServlet;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.ssafy.spring.trip.dto.AreaDto;
-import edu.ssafy.spring.trip.dto.AttractionInfoDto;
-import edu.ssafy.spring.trip.model.service.TripService;
-import lombok.extern.slf4j.Slf4j;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 
 @Controller
 @RequestMapping("/trip")
 @Slf4j
-public class TripController extends HttpServlet {
-	
-	private TripService service;
-	
-	@Autowired
-	public TripController(TripService service) {
-		super();
-		this.service = service;
-	}
-	
-	@GetMapping
-	public ResponseEntity<?> trip(@RequestParam(name = "action") String action,
-            		 @RequestParam(name = "regcode_pattern", required = false) String regcodePattern,
-        			 @RequestParam(name = "regcode", required = false) String regcode,
-    				 @RequestParam(name =  "area", required = false) String area) {
-        if ("trip".equals(action)) {
-        	return ResponseEntity.ok("Redirect to /trip/trip.jsp");
-        } else if ("detail".equals(regcodePattern)) {
+public class TripController {
+
+    private final TripService service;
+
+    @Autowired
+    public TripController(TripService service) {
+        this.service = service;
+    }
+    
+    @GetMapping("/trip")
+    public String trip() {
+    	return "trip/trip";
+    }
+
+    @GetMapping("/option")
+    @RequestBody
+    public ResponseEntity<?> option(@RequestParam(name = "action", required = false) String action,
+                                  @RequestParam(name = "regcode_pattern", required = false) String regcodePattern,
+                                  @RequestParam(name = "regcode", required = false) String regcode,
+                                  @RequestParam(name = "area", required = false) String area) throws JsonProcessingException {
+        if ("detail".equals(regcodePattern)) {
             String[] search = regcode.split(" ");
             AttractionInfoDto attractionInfoDto = new AttractionInfoDto();
             attractionInfoDto.setSidoCode(Integer.parseInt(search[1]));
             attractionInfoDto.setContentTypeId(Integer.parseInt(search[search.length - 1]));
             List<AttractionInfoDto> list = service.attractionList(attractionInfoDto);
-            return ResponseEntity.ok(list);
+            return ResponseEntity.ok(list); // JSON으로 변환하여 반환합니다.
         } else {
-            AreaDto trip = new AreaDto();
             String set = service.searchArea(regcodePattern, regcode, area);
+            AreaDto trip = new AreaDto();
             trip.setArea(set);
-            return ResponseEntity.ok(trip.getArea());
+            System.out.println(ResponseEntity.ok(trip));
+            return ResponseEntity.ok(trip); // JSON으로 변환하여 반환합니다.
         }
     }
-	
-	
 }

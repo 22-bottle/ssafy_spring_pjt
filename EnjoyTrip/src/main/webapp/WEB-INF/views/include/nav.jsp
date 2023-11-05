@@ -26,7 +26,7 @@
 					<a class="nav-link" href="${root}/">홈</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="${root}/trip?action=trip">지역별여행지</a>
+					<a class="nav-link" href="${root}/trip/trip">지역별여행지</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="${root}/board/list?pgno=1&key=&word=">여행후기</a>
